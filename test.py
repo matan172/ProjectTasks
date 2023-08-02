@@ -1,5 +1,6 @@
 from faker import Faker
 from oop import Task
+import db
 
 fake = Faker()
 
@@ -8,9 +9,14 @@ fake = Faker()
 def Fake_tasks(n:int=10):
     """
     <- n
-    -> [fake_Task*n]
+    add fake tasks to DB tasks TABLE tasks
+    -> none
     """
-    ret_list = []
     for i in range(n):
-        temp_task = Task(
-            date_added=fake.date
+        db.create_Task(date_added=fake.date(),
+            date_finish=fake.date(),
+            desc= fake.name())
+
+
+
+# Fake_tasks() # to add 10 fake tasks

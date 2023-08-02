@@ -52,8 +52,8 @@ def insert_tasks_sql(arr:list,filename="tasks.sqlite"):
     VALUES 
     """
     lst = []
-    for i in arr:
-        lst.append( f"('{i.name}','{i.phone}','{i.discount}')")
+    for task in arr:
+        lst.append( f"('{task.date_added}','{task.date_finish}','{task.desc}','{task.completed}')")
         
     statement += ",".join(lst)+';'
     return statement
@@ -71,3 +71,4 @@ def create_Task(date_added,date_finish,desc,completed=False):
     
 
 setup_tasks_tasks()
+
