@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}
+        
+    {% endblock title %}</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('.static', filename='style.css')}}">
+    
+</head>
+<body>
+    
+    <div class="topmenu"> 
+        <div class="menuitem" onclick="location.href='/';">todo</div>
+        <div class="menuitem" onclick="location.href='completed';">all completed</div>
+        <div class="menuitem" onclick="location.href='all';">all tasks</div>
+        
+        <hr>
+        today: {{today}}
+        <hr>
+        <div class="searchBar">
+        <form action="?" method="POST">
+            <label for="search"></label>
+            <input type="text" name="search" id="" placeholder="search">
+            <input type="submit" name="" id="" value="search">
+        </form>
+        
+
+
+        </div>
+        <hr>
+
+        <h1>new task:</h1>
+        <div class="add">
+            <form action="/addTask" method="get">
+                <label for="fdate">finish by: </label>
+                <input type="date" name="fdate">
+                <textarea rows="20" cols="30" name="desc"></textarea>
+                <input type="submit" value="add Task">
+            </form>
+        </div>
+
+
+        
+    </div>
+    
+    {% block main %}
+        
+    {% endblock main %}
+    
+</body>
+</html>

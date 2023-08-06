@@ -66,9 +66,79 @@ def create_Task(date_added,date_finish,desc,completed=False):
     query_db(insert_tasks_sql((task,)))
      
      
+def show_tasks():
+     statement = "SELECT * FROM tasks"
+     return query_db(statement)
+
+def task_objects():
+    """
+    <- [(id, taskOBJ)**,]
+    """
+    ret_list = []
+    for task in show_tasks():
+        ret_list.append((task[0],
+             Task(date_added=task[1],
+             date_finish=task[2],
+             desc=task[3],
+             completed=task[4])))
+    return ret_list
+
+def task_objects_bystate(state):
+    """
+    <"False"> = not completed | <True> = completed 
+    <-  [(id, taskOBJ)**,]
+    """
+    ret_list = []
+    for task in show_tasks():
+        if task[4] == state:
+            ret_list.append((task[0],
+                Task(date_added=task[1],
+                date_finish=task[2],
+                desc=task[3],
+                completed=task[4])))
+    return ret_list
+
+def filter_tasks(db,q):
+    ret_list = []
+    for task in db:
+        for i in task[1].__dict__.values():
+            if q.lower() in str(i):
+                ret_list.append(task)
+                break
+    return ret_list
 
 
+
+def completeTask(taskid, complete = True):
+    if complete:
+        statement= f"UPDATE tasks SET completed = 'True' WHERE taskid = '{taskid}';"
+        query_db(statement)
+
+    else:
+        statement= f"UPDATE tasks SET completed = 'False' WHERE taskid = '{taskid}';"
+        query_db(statement)
+
+def get_task_info(taskid):
+    statement = f"SELECT * FROM tasks WHERE taskid = '{taskid}';"
+    task = query_db(statement)[0]
+    return (task[0],
+                Task(date_added=task[1],
+                date_finish=task[2],
+                desc=task[3],
+                completed=task[4]))
+
+
+def update_desc(taskid,desc):
+    statement = f"UPDATE tasks SET desc = '{desc}' WHERE taskid = '{taskid}';"
+    query_db(statement=statement)
     
 
-setup_tasks_tasks()
+def update_fdate(taskid,date):
+    statement = f"UPDATE tasks SET date_finish = '{date}' WHERE taskid = '{taskid}';"
+    query_db(statement=statement)
 
+
+
+setup_tasks_tasks()
+    
+print(get_task_info(1))

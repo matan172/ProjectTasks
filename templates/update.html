@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    update
+{% endblock title %}
+
+
+{% block main %}
+
+    <div class="update">
+        task id : {{taskid}}
+        created on : {{task.date_added}}
+        <form action="/updateTask" method="post">
+            <input type="hidden" name="taskid" value="{{taskid}}">
+            <label for="date">date to finish : </label>
+            <input type="date" name="date">
+            <textarea rows="5" cols="50" name="desc">{{task.desc}}</textarea>
+            <input type="submit" value="update">
+            
+            
+
+
+        </form>
+
+    </div>
+    
+{% endblock main %}

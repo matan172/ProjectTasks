@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+
+
+
+{% block head %}
+    
+{% endblock head %}
+
+
+{% block main %}
+<div class="main">
+    <ul>
+        {% for task in tasks %}
+            <li class="listitem">
+                <div class="task" {% if task[1].completed == 'True'%}
+                    style="background-color: rgb(108, 219, 108);"
+                {% endif %}>
+                    <div class="date">
+                        <span>date created: {{task[1].date_added}}</span>
+                        <span>|</span>
+                        <span>date to finish: {{task[1].date_finish}}</span>
+                    </div>
+                    
+                    <hr>
+                    
+                        {{task[1].desc}}
+                    
+                </div>
+                    
+                
+                <div class="options">
+                    {% if task[1].completed == "False" %}
+                        <span><form action="/completeTask" method="get">
+                        
+                            <input type="hidden" name="taskid" value="{{task[0]}}">
+                            <input type="submit" value="Complete Task">
+                        </form></span>
+                        <span>
+                            <form action="/updateTask" method="get">
+                                <input type="hidden" name="taskid" value="{{task[0]}}">
+                                <input type="submit" value="update">
+                    
+                        </form>
+                    </span>
+                    {%else%}
+                    <span><form action="/renewTask" method="get">
+                        
+                        <input type="hidden" name="taskid" value="{{task[0]}}">
+                        <input type="submit" value="renew Task">
+                    </form></span>
+
+                    {% endif %}
+                </div>
+                
+                    
+                
+                    
+                
+            </li>
+            
+        {% endfor %}
+    </ul>
+</div>
+    
+{% endblock main %}
